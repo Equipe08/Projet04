@@ -25,15 +25,18 @@ Partie::Partie(string s){
 }
 Partie::~Partie() {}
 ostream & operator<<(ostream &out , const Partie p){
-    out << "  " ;
+    out << "   " ;
     for(int i=0;i<p.nb_col;i++){
         out  << i <<" ";
+        if (i<10) out << " " ;
     }
     out << "\n" ;
     for(int i=0;i<p.nb_li;i++){
         out <<i<< " " ;
+        if (i<10) out << " " ;
+
         for(int j=0;j<p.nb_col;j++){
-            out << p.grille[i][j]<<" " ;
+            out << p.grille[i][j]<<"  " ;
         }
         out << "\n" ;
     }
@@ -73,13 +76,12 @@ void Partie::placerMine(int x,int y){
     for (int i=0; i<Ent+1; i++)
     {
         vecX.push_back(x+i);
-        vecY.push_back(y+i);
-    }
-    for (int i=Ent+1; i<2*Ent+1;i++)
-    {
         vecX.push_back(x-i);
+        vecY.push_back(y+i);
         vecY.push_back(y-i);
+        cout << x+i <<" "<< y+i <<endl ;
     }
+
     for(int i=0;i<nb_bomb;i++){
 
         do {
@@ -88,7 +90,7 @@ void Partie::placerMine(int x,int y){
         b=rand()%nb_col ;
         if (find(vecX.begin(), vecX.end(), a) != vecX.end() && find(vecY.begin(), vecY.end(), b) != vecY.end())
             test=false;}
-        while ((grille[a][b].getValue()==-1) || (test==false))   ;
+        while (test==false)   ;
         grille[a][b].setValue(-1) ;
     }
 }
@@ -108,7 +110,7 @@ void Partie::afficherZeros(int x, int y){
 bool Partie::selectAction(int i ,int x,int y){
     if (i==0){
         if (grille[x][y].getValue()==-1 && grille[x][y].getEtat()!='f') {afficherBomb() ; return false ;}
-        if (grille[x][y].getValue()==0) {afficherZeros(x,y) ; return true;}
+        if (grille[x][y].getValue()==0) afficherZeros(x,y) ;
         if (grille[x][y].getEtat()!='f') grille[x][y].setShown() ;
         for(int i=0;i<nb_li;i++){
             for(int j=0;j<nb_col;j++){
@@ -132,6 +134,7 @@ bool Partie::resultatPartie(){
     for(int i=0;i<nb_li;i++){
         for(int j=0;j<nb_col;j++){
             if (grille[i][j].getValue()==-1 && grille[i][j].getEtat()=='s') return false  ;
+            if (grille[i][j].getValue()!=-1 && grille[i][j].getEtat()=='h') return false ;
         }
    }
    return true ;

@@ -7,10 +7,10 @@
 #include <fstream>
 #include "case.h"
 #include "partie.h"
-#include <chrono>
 #include <ctime>
+#include <sstream>
 using namespace std;
-using namespace std::chrono;
+
 map<string ,vector< string > > mp_p ;
 map<string , int > mp_w ;
 map<string ,int > mp_l ;
@@ -110,8 +110,6 @@ void save(){
 int main()
 {
     load() ;
-    //score() ;
-
     menu() ;
     save() ;
     return 0;
@@ -139,9 +137,13 @@ void jouer(){
     cout << "donner votre nom et prenom :" ;
     string nom,prenom ;
     cin >> nom >> prenom ;
-    time_t tt = time(0) ;
-    string dt = ctime(&tt) ;
-    mp_p[nom+" "+prenom].push_back(dt) ;
+    time_t tp = time(0);
+
+    tm * ts = localtime(&tp);
+    stringstream ss ;
+
+   ss  << ts->tm_mday<< "/"<< ts->tm_mon +1  << "/" << 1900 + ts->tm_year <<" "<<ts->tm_hour<<":"<< ts->tm_min ;
+
 
     system("cls") ;
     cout << "choisir la difficulte : "<< endl ;
@@ -178,8 +180,8 @@ void jouer(){
     p.placerMine(h,q) ;
     p.calculValeur() ;
     p.selectAction(0,h,q) ;
-    time_point<system_clock> start, end;
-    start =system_clock::now();
+    clock_t start, t_end;
+    start =clock();
 
 
     do{
@@ -196,27 +198,30 @@ void jouer(){
     system("cls") ;
     cout << p ;
 
+    t_end =clock();
 
     if (p.resultatPartie()){
-        end =system_clock::now();
         int s;
-        duration<double> elapsed_seconds = end - start;
-        double seconds = duration<double>(elapsed_seconds).count();
+        double seconds= t_end - start;
+
         s=score (nb , seconds);
         cout << "\n \n Bien joue !!"<<endl;
-        cout<<"Votre score est:"<<s;
+        cout<<"Votre score est:"<<s ;
         if(mp_w[nom+" "+prenom]) mp_w[nom+" "+prenom]+=1 ;
 
         else  mp_w[nom+" "+prenom]=1 ;
+        ss << " won score:"<<s ;
 
 
     }
     else {
-            end =system_clock::now();
         cout <<"\n\nGame Over" ;
         if(mp_l[nom+" "+prenom]) mp_l[nom+" "+prenom]+=1 ;
         else mp_l[nom+" "+prenom]=1 ;
+        ss << " loss" ;
     }
+    ch = ss.str() ;
+    mp_p[nom+" "+prenom].push_back(ch) ;
 
     cout << "\n\n 1-rejouer 2-retourner vers menu\n" ;
     cin >> n ;
