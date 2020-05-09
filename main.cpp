@@ -120,7 +120,7 @@ void menu(){ //Affichage du menu
     cout <<"1-jouer" << endl ;
     cout << "2-historique" << endl ;
     cout << "3-meilleurs scores" << endl ;
-    cout << "4-quitter"<< endl;
+    cout << "4-quitter et enregistrer"<< endl;
     int n ;
     cin >> n ;
     switch (n){
@@ -134,6 +134,7 @@ void menu(){ //Affichage du menu
         break ;
     case 4:
         system("cls");
+        break;
     case 3:
        system("cls");
        meilleurscore();
