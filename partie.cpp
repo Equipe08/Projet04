@@ -76,12 +76,13 @@ void Partie::placerMine(int x,int y){
     for (int i=0; i<Ent+1; i++)
     {
         vecX.push_back(x+i);
-        vecX.push_back(x-i);
         vecY.push_back(y+i);
-        vecY.push_back(y-i);
-        cout << x+i <<" "<< y+i <<endl ;
     }
-
+    for (int i=Ent+1; i<2*Ent+1;i++)
+    {
+        vecX.push_back(x-i);
+        vecY.push_back(y-i);
+    }
     for(int i=0;i<nb_bomb;i++){
 
         do {
@@ -89,8 +90,9 @@ void Partie::placerMine(int x,int y){
         a=rand()%nb_li ;
         b=rand()%nb_col ;
         if (find(vecX.begin(), vecX.end(), a) != vecX.end() && find(vecY.begin(), vecY.end(), b) != vecY.end())
-            test=false;}
-        while (test==false)   ;
+            {
+                test=false;}}
+        while ((grille[a][b].getValue()==-1) || (test==false))   ;
         grille[a][b].setValue(-1) ;
     }
 }

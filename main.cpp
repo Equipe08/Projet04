@@ -9,6 +9,7 @@
 #include "partie.h"
 #include <ctime>
 #include <sstream>
+#include <string>
 using namespace std;
 
 map<string ,vector< string > > mp_p ;
@@ -17,6 +18,7 @@ map<string ,int > mp_l ;
 void menu() ;
 void jouer() ;
 void historique() ;
+void meilleurscore();
 void load(){
     ifstream fw("fw.txt",ios::in);
     if (fw){
@@ -63,7 +65,7 @@ void load(){
 }
 int score(int n, double x ){
     int s;
-    s=(1000000/x)* n;
+    s=(10000000/x)* n;
     return s;
 }
 void save(){
@@ -117,7 +119,8 @@ int main()
 void menu(){
     cout <<"1-jouer" << endl ;
     cout << "2-historique" << endl ;
-    cout << "3-quitter" << endl ;
+    cout << "3-meilleurs scores" << endl ;
+    cout << "4-quitter"<< endl;
     int n ;
     cin >> n ;
     switch (n){
@@ -129,9 +132,73 @@ void menu(){
         system("cls") ;
         historique() ;
         break ;
-    case 3:
+    case 4:
         system("cls");
+    case 3:
+       system("cls");
+       meilleurscore();
+        break ;
     }
+}
+void comparescore(int s, string n, string p)
+{
+       bool test=false;
+       string tab[5];
+       int t[5];
+     ifstream fichier("ms.txt", ios::in);
+     if (fichier)
+     {
+         for (int j=0; j<5; j++)
+         {string lg;
+        getline(fichier, lg);
+        tab[j]=lg;
+        }
+        fichier.close();
+     }
+        for (int i=0; i<5; i++)
+
+            {
+                size_t pos = tab[i].find("//");
+                string ch= tab[i].substr (pos+2);
+                istringstream iss( ch );
+
+                iss >> t[i];}
+
+     for (int i=0; i<5; i++)
+     {
+         if (s>=t[i])
+     {
+         test=true;
+         for (int j=4; j>i; j--)
+                {tab[j]=tab[j-1];}
+
+     string ch= n + "-" + p;
+     do
+     {
+         ch= ch+"-";
+     }
+     while (ch.length()!=20);
+     string s1=to_string(s);
+     ch= ch +"//"+s1;
+     tab[i]=ch;
+     break;
+     }}
+     if (test)
+     {
+     cout<<"Felicitations tu es parmi la TOP 5"<< endl;
+            for (int j=0; j<5; j++)
+                {cout<< tab[j]<<endl;}
+     ofstream fichierx("ms.txt", ios::out | ios::trunc);
+        if(fichierx)
+        {
+                for (int j=0; j<5; j++)
+                {
+                fichierx << tab[j] << endl;}
+                fichierx.close();
+        }}
+        else cout<<"Votre score est: "<<s<<endl;
+
+
 }
 void jouer(){
     cout << "donner votre nom et prenom :" ;
@@ -142,7 +209,7 @@ void jouer(){
     tm * ts = localtime(&tp);
     stringstream ss ;
 
-   ss  << ts->tm_mday<< "/"<< ts->tm_mon +1  << "/" << 1900 + ts->tm_year <<" "<<ts->tm_hour<<":"<< ts->tm_min ;
+    ss  << ts->tm_mday<< "/"<< ts->tm_mon +1  << "/" << 1900 + ts->tm_year <<" "<<ts->tm_hour<<":"<< ts->tm_min ;
 
 
     system("cls") ;
@@ -206,7 +273,7 @@ void jouer(){
 
         s=score (nb , seconds);
         cout << "\n \n Bien joue !!"<<endl;
-        cout<<"Votre score est:"<<s ;
+        comparescore(s,nom,prenom);
         if(mp_w[nom+" "+prenom]) mp_w[nom+" "+prenom]+=1 ;
 
         else  mp_w[nom+" "+prenom]=1 ;
@@ -239,6 +306,26 @@ void jouer(){
 
 
 
+}
+void meilleurscore()
+{
+   ifstream fichiers("ms.txt", ios::in);
+
+        if(fichiers)
+        {       cout<<"TOP5"<<endl;;
+                for (int i=0; i<5;i++){
+                string lg;
+                getline(fichiers, lg);
+                cout<<lg<<endl;}
+                fichiers.close();
+        }
+        else
+                cerr << "Aucun score a afficher" << endl;
+        cout << "\n\n 1-retourner vers menu\n" ;
+    int n ;
+    cin >> n ;
+    system("cls") ;
+    menu() ;
 }
 void historique(){
     map<string ,vector< string > >::iterator it3 ;

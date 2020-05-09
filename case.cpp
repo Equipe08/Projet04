@@ -26,7 +26,7 @@ char Case::getEtat() const {
 }
 ostream &operator<<(ostream &out, const Case C){
     if(C.etat=='h') out<< 'X' ;
-    if(C.etat=='s') { if (C.valeur==-1) out << 'M' ;
+    if(C.etat=='s')  {if (C.valeur==-1) out << 'M' ;
     else out<< C.valeur ;}
     if(C.etat=='f') out<< 'F' ;
 
