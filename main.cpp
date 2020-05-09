@@ -20,7 +20,7 @@ void jouer() ;
 void historique() ;
 void meilleurscore();
 void load(){
-    ifstream fw("fw.txt",ios::in);
+    ifstream fw("fw.txt",ios::in);// remplir le dictionnaire mp_w a partir du fichier fw
     if (fw){
         string ch1,ch2;
         int n ;
@@ -31,7 +31,7 @@ void load(){
         }
     }
     fw.close();
-    ifstream fl("fl.txt",ios::in);
+    ifstream fl("fl.txt",ios::in); // remplir le dictionnaire mp_l a partir du fichier fl
     if (fl){
         string ch1,ch2;
         int n ;
@@ -41,7 +41,7 @@ void load(){
         }
     }
     fl.close();
-    ifstream fp("pw.txt",ios::in) ;
+    ifstream fp("pw.txt",ios::in) ; // remplir le dictionnaire mp_p a partir du fichier pw et pnw
     ifstream fnp("pnw.txt",ios::in) ;
     if (fp && fnp) {
         string ch1,ch2,ch;
@@ -69,7 +69,7 @@ int score(int n, double x ){ //Calcul du score
     return s;
 }
 void save(){
-    ofstream sfw("fw.txt",ios::out);
+    ofstream sfw("fw.txt",ios::out); // mise a jour du fichier fw a partir de mp_w
     if (sfw){
         map<string ,int>::iterator it ;
         for(it=mp_w.begin();it!=mp_w.end();it++){
@@ -80,7 +80,7 @@ void save(){
         }
     }
     sfw.close() ;
-    ofstream sfl("fl.txt",ios::out);
+    ofstream sfl("fl.txt",ios::out); // mise a jour du fichier fl a partir de mp_l
     if(sfl){
         map<string ,int>::iterator it2 ;
         for(it2=mp_l.begin();it2!=mp_l.end();it2++){
@@ -90,7 +90,7 @@ void save(){
         }
     }
     sfl.close() ;
-    ofstream sfp("pw.txt",ios::out) ;
+    ofstream sfp("pw.txt",ios::out) ; // mise a jour du fichier pw et pnw a partir de mp_p
     ofstream sfnp("pnw.txt",ios::out) ;
     if (sfp && sfnp){
     map<string ,vector< string > >::iterator it3 ;
@@ -143,14 +143,15 @@ void menu(){ //Affichage du menu
 }
 void comparescore(int s, string n, string p)
 {
-       bool test=false;
-       string tab[5];
-       int t[5];
+    bool test=false;
+    string tab[5];
+    int t[5];
      ifstream fichier("ms.txt", ios::in);
      if (fichier)
      {
-         for (int j=0; j<5; j++) //Mettre le contenu des lignes du fichier dans un tableau tab
-         {string lg;
+        for (int j=0; j<5; j++) //Mettre le contenu des lignes du fichier dans un tableau tab
+        {
+        string lg;
         getline(fichier, lg);
         tab[j]=lg;
         }
@@ -163,7 +164,8 @@ void comparescore(int s, string n, string p)
                 string ch= tab[i].substr (pos+2);
                 istringstream iss( ch );
 
-                iss >> t[i];}
+                iss >> t[i];
+            }
 
      for (int i=0; i<5; i++) //Comparer le score S avec les autres scores dans le tableau t
      {
@@ -171,7 +173,8 @@ void comparescore(int s, string n, string p)
      {
          test=true;
          for (int j=4; j>i; j--) // Décalage des cases du tableau pour laisser un espace pour le score dans la case i
-                {tab[j]=tab[j-1];}
+                {tab[j]=tab[j-1];
+                }
 
      string ch= n + "-" + p;
      do
@@ -265,7 +268,6 @@ void jouer(){
     }while(p.selectAction(n-1,h,q)) ;
     system("cls") ;
     cout << p ;
-
     t_end =clock(); //Arret du chronomètre
 
     if (p.resultatPartie()){ //En cas de victoire
@@ -273,7 +275,7 @@ void jouer(){
         double seconds= t_end - start; //Calcul du temps écoulé
 
         s=score (nb , seconds); //Calcul du score
-        cout << "\n \n Bien joue !!"<<endl;
+        cout << "\n \n Bien joue !!\n\n"<<endl;
         comparescore(s,nom,prenom); //Comparer son score aux scores de la TOP5
         if(mp_w[nom+" "+prenom]) mp_w[nom+" "+prenom]+=1 ;
 
@@ -313,7 +315,7 @@ void meilleurscore()
    ifstream fichiers("ms.txt", ios::in);
 
         if(fichiers) //Affichage du contenu du fichier
-        {       cout<<"TOP5"<<endl;;
+        {       cout<<"TOP5"<<endl;
                 for (int i=0; i<5;i++){
                 string lg;
                 getline(fichiers, lg);
@@ -321,7 +323,7 @@ void meilleurscore()
                 fichiers.close();
         }
         else
-                cerr << "Aucun score a afficher" << endl;
+        cerr << "Aucun score a afficher" << endl;
         cout << "\n\n 1-retourner vers menu\n" ;
     int n ;
     cin >> n ;

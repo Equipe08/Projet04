@@ -105,3 +105,39 @@
 	<sstream>
 	<string>
 
+1589064231 source:c:\users\legion\desktop\projet04-master\case.cpp
+	<iostream>
+	"case.h"
+
+1589064231 c:\users\legion\desktop\projet04-master\case.h
+	<iostream>
+	<iostream>
+
+1589064231 source:c:\users\legion\desktop\projet04-master\partie.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<vector>
+	<algorithm>
+	<set>
+	"partie.h"
+
+1589064231 c:\users\legion\desktop\projet04-master\partie.h
+	<iostream>
+	<set>
+	"case.h"
+
+1589066913 source:c:\users\legion\desktop\projet04-master\main.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<cstdlib>
+	<map>
+	<vector>
+	<fstream>
+	"case.h"
+	"partie.h"
+	<ctime>
+	<sstream>
+	<string>
+
