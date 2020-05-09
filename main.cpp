@@ -63,7 +63,7 @@ void load(){
     fnp.close() ;
 
 }
-int score(int n, double x ){
+int score(int n, double x ){ //Calcul du score
     int s;
     s=(10000000/x)* n;
     return s;
@@ -116,7 +116,7 @@ int main()
     save() ;
     return 0;
 }
-void menu(){
+void menu(){ //Affichage du menu
     cout <<"1-jouer" << endl ;
     cout << "2-historique" << endl ;
     cout << "3-meilleurs scores" << endl ;
@@ -148,14 +148,14 @@ void comparescore(int s, string n, string p)
      ifstream fichier("ms.txt", ios::in);
      if (fichier)
      {
-         for (int j=0; j<5; j++)
+         for (int j=0; j<5; j++) //Mettre le contenu des lignes du fichier dans un tableau tab
          {string lg;
         getline(fichier, lg);
         tab[j]=lg;
         }
         fichier.close();
      }
-        for (int i=0; i<5; i++)
+        for (int i=0; i<5; i++) //Extraire les scores contenus dans les lignes dans un tableau d'entiers t
 
             {
                 size_t pos = tab[i].find("//");
@@ -164,12 +164,12 @@ void comparescore(int s, string n, string p)
 
                 iss >> t[i];}
 
-     for (int i=0; i<5; i++)
+     for (int i=0; i<5; i++) //Comparer le score S avec les autres scores dans le tableau t
      {
          if (s>=t[i])
      {
          test=true;
-         for (int j=4; j>i; j--)
+         for (int j=4; j>i; j--) // Décalage des cases du tableau pour laisser un espace pour le score dans la case i
                 {tab[j]=tab[j-1];}
 
      string ch= n + "-" + p;
@@ -179,17 +179,17 @@ void comparescore(int s, string n, string p)
      }
      while (ch.length()!=20);
      string s1=to_string(s);
-     ch= ch +"//"+s1;
+     ch= ch +"//"+s1; //Formatage de l'affichage de la case i
      tab[i]=ch;
      break;
      }}
-     if (test)
+     if (test) //Si l'utilisateur fait partie de la TOP5
      {
      cout<<"Felicitations tu es parmi la TOP 5"<< endl;
-            for (int j=0; j<5; j++)
+            for (int j=0; j<5; j++) //Affichage du tableau des scores et les noms
                 {cout<< tab[j]<<endl;}
      ofstream fichierx("ms.txt", ios::out | ios::trunc);
-        if(fichierx)
+        if(fichierx) //Stocker la nouvelle TOP5 dans le fichier
         {
                 for (int j=0; j<5; j++)
                 {
@@ -248,7 +248,7 @@ void jouer(){
     p.calculValeur() ;
     p.selectAction(0,h,q) ;
     clock_t start, t_end;
-    start =clock();
+    start =clock(); //Declencher le chronomètre
 
 
     do{
@@ -265,19 +265,19 @@ void jouer(){
     system("cls") ;
     cout << p ;
 
-    t_end =clock();
+    t_end =clock(); //Arret du chronomètre
 
-    if (p.resultatPartie()){
+    if (p.resultatPartie()){ //En cas de victoire
         int s;
-        double seconds= t_end - start;
+        double seconds= t_end - start; //Calcul du temps écoulé
 
-        s=score (nb , seconds);
+        s=score (nb , seconds); //Calcul du score
         cout << "\n \n Bien joue !!"<<endl;
-        comparescore(s,nom,prenom);
+        comparescore(s,nom,prenom); //Comparer son score aux scores de la TOP5
         if(mp_w[nom+" "+prenom]) mp_w[nom+" "+prenom]+=1 ;
 
         else  mp_w[nom+" "+prenom]=1 ;
-        ss << " won score:"<<s ;
+        ss << " won score:"<<s ; //Stocker le score dans le fichier
 
 
     }
@@ -285,7 +285,7 @@ void jouer(){
         cout <<"\n\nGame Over" ;
         if(mp_l[nom+" "+prenom]) mp_l[nom+" "+prenom]+=1 ;
         else mp_l[nom+" "+prenom]=1 ;
-        ss << " loss" ;
+        ss << " loss" ; //Stocker le résultat dans le fichier
     }
     ch = ss.str() ;
     mp_p[nom+" "+prenom].push_back(ch) ;
@@ -311,7 +311,7 @@ void meilleurscore()
 {
    ifstream fichiers("ms.txt", ios::in);
 
-        if(fichiers)
+        if(fichiers) //Affichage du contenu du fichier
         {       cout<<"TOP5"<<endl;;
                 for (int i=0; i<5;i++){
                 string lg;
