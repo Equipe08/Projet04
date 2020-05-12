@@ -18,7 +18,7 @@ public:
     void afficherZeros(int ,int ) ;
     bool selectAction(int,int,int) ;
     bool resultatPartie() ;
-     friend ostream & operator<<(ostream & , const Partie ) ;
+    friend ostream & operator<<(ostream & , const Partie ) ;
 
 };
 
