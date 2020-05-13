@@ -224,19 +224,25 @@ void jouer(){
     int n ;
     cin >> n ;
     string ch ;
-    int nb;
+    int nb, nbli,nbcol;
     switch (n){
     case 1:
         ch="difficile" ;
         nb=99;
+        nbcol=30;
+        nbli=16;
         break ;
     case 2:
         ch="normal" ;
         nb=40;
+        nbcol=16;
+        nbli=16;
         break ;
     case 3:
         ch="facile" ;
         nb=10;
+        nbcol=9;
+        nbcol=9;
         break ;
     }
     Partie p(ch) ;
@@ -246,8 +252,11 @@ void jouer(){
     system("cls") ;
     cout << p ;
 
-    cout << "donner les coordonnes de la case : ";
-    cin >> h >> q ;
+
+    do
+    {   cout << "donner les coordonnes de la case : ";
+        cin >> h >> q ;}
+    while (h<0 || h>=nbli || q<0 || q>=nbcol);
     p.placerMine(h,q) ;
     p.calculValeur() ;
     p.selectAction(0,h,q) ;
@@ -259,8 +268,11 @@ void jouer(){
         system("cls") ;
         cout << p ;
 
-        cout << "donner les coordonnes de la case : ";
-        cin >> h >> q ;
+
+         do
+    {   cout << "donner les coordonnes de la case : ";
+        cin >> h >> q ;}
+    while (h<0 || h>=nbli || q<0 || q>=nbcol);
         cout << "choisir votre action :\n 1-liberer une case 2-marquer une mine 3-demarquer une mine 4-quitter partie" << endl ;
         cin >> n ;
         if(n==4) break ;

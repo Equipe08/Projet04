@@ -70,19 +70,21 @@ void Partie::placerMine(int x,int y){ //Placement des mines en fonction de la pr
     int a,b,Ent;
     bool test;
     srand(time(NULL)) ;
-    Ent= 2 + rand() % 3; //Choisir un entourage bien déterminé aléatoirement
+    Ent= 2 + rand() % 2; //Choisir un entourage bien déterminé aléatoirement
     vector <int> vecX;
     vector <int> vecY;
     for (int i=0; i<Ent+1; i++) //Les coordonnées des cases de l'entourage choisie seront ajoutés à 2 vecteur vecX et vecY
     {
         vecX.push_back(x+i);
         vecY.push_back(y+i);
-    }
-    for (int i=Ent+1; i<2*Ent+1;i++)
-    {
         vecX.push_back(x-i);
         vecY.push_back(y-i);
     }
+    /*for (int i=Ent+1; i<2*Ent+1;i++)
+    {
+        vecX.push_back(x-i);
+        vecY.push_back(y-i);
+    }*/
     for(int i=0;i<nb_bomb;i++){
 
         do {
